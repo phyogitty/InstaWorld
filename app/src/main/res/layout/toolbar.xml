@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    android:background="#EED790"
+    android:background="@color/colorPrimary"
     android:elevation="5dp"
 
     android:theme="@style/CustomTheme">
@@ -18,7 +18,7 @@
         android:layout_gravity="center"
         android:fontFamily="cursive"
         android:text="InstaWorld"
-        android:textColor="#425BE7"
+        android:textColor="@color/colorAccent"
 
         android:textSize="30sp"
         android:textStyle="bold" />

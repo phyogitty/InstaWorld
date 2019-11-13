@@ -7,14 +7,12 @@
                 android:angle="180"
                 android:centerColor="@color/colorPrimaryDark"
                 android:centerX="50%"
-                android:endColor="@color/colorAccent"
-                android:startColor="@color/colorPrimary"
-
+                android:endColor="@color/colorPrimary"
+                android:startColor="@color/colorAccent"
 
                 ></gradient>
 
-<!--            <corners android:radius="15dp" />-->
-
+            <!--            <corners android:radius="15dp" />-->
         </shape>
     </item>
 </selector>
