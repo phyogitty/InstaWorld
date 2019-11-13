@@ -38,23 +38,6 @@ public class ParseApplication extends Application {
                 .clientBuilder(builder)
                 .server("https://phyo-instapound.herokuapp.com/parse/").build());
 
-        ParseUser user = new ParseUser();
-// Set core properties
-        user.setUsername("phyokhine");
-        user.setPassword("secret123");
-        user.setEmail("pk@example.com");
-// Set custom properties
-        user.put("phone", "650-253-0000");
-// Invoke signUpInBackground
-        user.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException e) {
-                if (e == null) {
-                    // Hooray! Let them use the app now.
-                } else {
-                    // Sign up didn't succeed. Look at the ParseException
-                    // to figure out what went wrong
-                }
-            }
-        });
+
     }
 }
