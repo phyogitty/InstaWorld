@@ -27,11 +27,13 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-## Sign-up GIF
+**Sign-up GIF**
 <img src='walk-through-signup.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-## Log-in and other actions GIF
+ 
+**Log-in and other actions GIF**
 <img src='walk-through-login.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-## FULL GIF
+
+**FULL GIF**
 <img src='walk-through-full.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
