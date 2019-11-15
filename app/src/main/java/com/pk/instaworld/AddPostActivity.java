@@ -1,14 +1,11 @@
 package com.pk.instaworld;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,8 +18,6 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import org.parceler.Parcels;
-
 import java.io.File;
 
 public class AddPostActivity extends AppCompatActivity {
@@ -34,6 +29,7 @@ public class AddPostActivity extends AppCompatActivity {
     Button btnCancelPost;
     Button btnEditPhoto;
     TextView etDescription;
+    Bitmap image;
 
     public static final String TAG = "AddPostActivity";
 
@@ -52,7 +48,7 @@ public class AddPostActivity extends AppCompatActivity {
 
 
 
-        Bitmap image = getIntent().getParcelableExtra("picture");
+        image = getIntent().getParcelableExtra("picture");
         ivPostToBe.setImageBitmap(image);
 
         btnCancelPost.setOnClickListener(new View.OnClickListener() {
@@ -72,9 +68,9 @@ public class AddPostActivity extends AppCompatActivity {
                 String description = etDescription.getText().toString();
                 ParseUser user = ParseUser.getCurrentUser();
                 savePost(description, user, (File) getIntent().getSerializableExtra("pictureFile"));
-                Intent i = new Intent(AddPostActivity.this, MainActivity.class);
-                setResult(RESULT_OK, i);
-                finish();
+
+//                setResult(RESULT_OK, i);
+//                finish();
                 // go to MainActivity
             }
         });
@@ -98,7 +94,7 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     private void savePost(String description, ParseUser parseUser, File pictureFile) {
-        Post post = new Post();
+        final Post post = new Post();
         post.setDescription(description);
         post.setUser(parseUser);
         post.setImage(new ParseFile(pictureFile));
@@ -106,13 +102,25 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
-                    Log.d(TAG, "Error while saving post");
+                    Log.d(TAG, "Error while saving post" + e);
                     e.printStackTrace();
                     return;
                 }
-                Log.d(TAG, "Successfully Saved Post!");
+                Intent i = new Intent();
+                i.putExtra("imageId", post.getObjectId());
+                i.putExtra("image", image);
+
+                Log.d(TAG, "Successfully Saved Post! " + post.getObjectId());
+                setResult(Activity.RESULT_OK, i);
+                finish();
+
             }
+
+
         });
+//        while (post.getImageId() == null) {
+//            Log.i(TAG, "TESTING: " + post.getImageId());
+//        }
 
     }
 }

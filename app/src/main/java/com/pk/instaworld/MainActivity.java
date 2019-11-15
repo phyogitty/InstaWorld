@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,10 +15,23 @@ import android.os.Environment;
 import android.os.Parcel;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.parse.GetCallback;
+import com.parse.LogInCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -27,6 +41,9 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     Button btnTakePicture;
+    ImageView ivPost;
+    TextView tvUserName;
+    TextView tvDescription;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public static final int ADD_POST_REQUEST_CODE = 20;
 
@@ -41,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         btnTakePicture = findViewById(R.id.btnTakePicture);
+        ivPost = findViewById(R.id.ivPost);
+        tvDescription = findViewById(R.id.tvDescription);
+        tvUserName = findViewById(R.id.tvUserName);
 
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,11 +124,58 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if(requestCode == ADD_POST_REQUEST_CODE && resultCode == RESULT_OK) {
             // Use Recycler view to display all the posts
+            String imageId = data.getStringExtra("imageId");
+            Log.i(TAG, "onActivityResult" + " these are extras: " + data.getExtras());
+            Log.i(TAG, "Print the id" + imageId);
+            ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+            Bitmap imageToBeDisplayed = data.getParcelableExtra("image");
+            ivPost.setImageBitmap(imageToBeDisplayed);
+
+            query.getInBackground(imageId, new GetCallback<Post>() {
+                @Override
+                public void done(Post object, ParseException e) {
+                    if (e == null) {
+                        Log.i(TAG, "fetched the things successfully" + object.getImage().getUrl());
+//                        Glide.with(MainActivity.this).load(object.getImage().getUrl()).into(ivPost);
+
+                        tvDescription.setText(object.getDescription());
+                        tvUserName.setText("@" + ParseUser.getCurrentUser().getUsername());
+                    } else {
+                        Log.i(TAG, "Error fetching what needed for displaying image", e);
+                    }
+                }
+            });
             Log.i(TAG, "Added a post successfully!");
         }
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logOut:
+                Log.i(TAG, "Logging out from " + ParseUser.getCurrentUser());
+
+                ParseUser.logOut();
+
+                Log.i(TAG, "Now the user should be null: " + ParseUser.getCurrentUser());
+
+                Intent i = new Intent(this, LoginActivity.class);
+                startActivity(i);
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     // Returns the File for a photo stored on disk given the fileName
     public File getPhotoFileUri(String fileName) {
         // Get safe storage directory for photos

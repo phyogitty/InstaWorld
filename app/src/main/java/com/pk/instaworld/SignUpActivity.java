@@ -2,7 +2,9 @@ package com.pk.instaworld;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText etConfirmPassword;
     Button btnCompleteSingUp;
     Button btnCancelSignUp;
+    public static final String TAG = "SignupActivity";
 
 
 
@@ -53,8 +56,8 @@ public class SignUpActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 if (isNotBlank(firstName) && isNotBlank(lastName) && isNotBlank(userName)
                  && isNotBlank(password) && isNotBlank(email) && isNotBlank(confirmPassword)) {
-                    if (password != confirmPassword) {
-                        Toast.makeText(SignUpActivity.this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+                    if (!password.equals(confirmPassword)) {
+                        Toast.makeText(SignUpActivity.this, "Passwords don't match!" + password + confirmPassword, Toast.LENGTH_SHORT).show();
                     } else {
                         final ParseUser user = new ParseUser();
                         // Set core properties
@@ -65,7 +68,10 @@ public class SignUpActivity extends AppCompatActivity {
                         user.setEmail(email);
                         user.signUpInBackground(new SignUpCallback() {
                             public void done(ParseException e) {
-                                if (e == null) {
+                                if (e != null) {
+                                    Log.i(TAG, "Signing up Success!");
+                                    Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
+                                    startActivity(i);
                                     // Hooray! Let them use the app now.
                                 } else {
                                     // Sign up didn't succeed. Look at the ParseException

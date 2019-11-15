@@ -1,5 +1,6 @@
 package com.pk.instaworld;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,6 +21,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
+    private Button btnSignUp;
+    public static final int SIGN_UP_REQUEST_CODE = 25;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnSignUp = findViewById(R.id.btnSignUp);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +46,23 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(i);
+            }
+        });
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        if (requestCode == SIGN_UP_REQUEST_CODE && resultCode == RESULT_OK) {
+//
+//        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
 
     private void login(String username, String password) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {

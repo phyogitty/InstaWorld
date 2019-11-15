@@ -31,14 +31,15 @@
             tools:text=" InstaWorld" />
 
         <EditText
-        android:id="@+id/etUsername"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:fontFamily="sans-serif-medium"
-        android:inputType="text"
-        android:hint="Username"
-        android:textColor="#70251616" />
+            android:id="@+id/etUsername"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:ems="10"
+            android:fontFamily="sans-serif-medium"
+            android:hint="Username"
+            android:inputType="text"
+            android:textColor="#70251616" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="300dp"
@@ -57,9 +58,10 @@
             android:id="@+id/btnLogin"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:background="@color/lightblue"
+            android:layout_marginTop="20dp"
 
-             android:text="Log In" />
+            android:background="@color/lightblue"
+            android:text="Log In" />
 
         <TextView
             android:layout_width="wrap_content"
