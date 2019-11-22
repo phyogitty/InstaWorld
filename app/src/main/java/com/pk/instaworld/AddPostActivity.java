@@ -25,11 +25,12 @@ public class AddPostActivity extends AppCompatActivity {
 
     ImageView ivPostToBe;
     Button btnTakePictureAgain;
-    Button btnSharePost;
-    Button btnCancelPost;
+
     Button btnEditPhoto;
     TextView etDescription;
     Bitmap image;
+    Button btnSharePost;
+    Button btnCancelPost;
 
     public static final String TAG = "AddPostActivity";
 
