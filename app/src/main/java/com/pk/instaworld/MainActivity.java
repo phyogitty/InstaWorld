@@ -38,14 +38,17 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pk.instaworld.fragmants.ComposeFragment;
 import com.pk.instaworld.fragmants.HomeFragment;
+import com.pk.instaworld.fragmants.MyProfileFragment;
 import com.pk.instaworld.fragmants.ProfileFragment;
+import com.pk.instaworld.fragmants.child_fragments.GridChildFragment;
+import com.pk.instaworld.fragmants.child_fragments.ListChildFragment;
 
 import org.parceler.Parcels;
 
 import java.io.File;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyProfileFragment.OnFragmentInteractionListener, GridChildFragment.OnFragmentInteractionListener, ListChildFragment.OnFragmentInteractionListener {
     public static final String TAG = "MainActivity";
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -95,6 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setSelectedItemId(R.id.action_home);
 
+    }
+    @Override
+    public void messageFromParentFragment(Uri uri) {
+        Log.i("TAG", "received communication from parent fragment");
+    }
+
+    @Override
+    public void messageFromChildFragment(Uri uri) {
+        Log.i("TAG", "received communication from child fragment");
     }
 
 //    private void launchCamera() {
@@ -180,32 +192,25 @@ public class MainActivity extends AppCompatActivity {
 
 //    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.logOut:
-                Log.i(TAG, "Logging out from " + ParseUser.getCurrentUser());
-
-                ParseUser.logOut();
-
-                Log.i(TAG, "Now the user should be null: " + ParseUser.getCurrentUser());
-
-                Intent i = new Intent(this, LoginActivity.class);
-                startActivity(i);
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle item selection
+//        switch (item.getItemId()) {
+//            case R.id.logOut:
+//                Log.i(TAG, "Logging out from " + ParseUser.getCurrentUser());
+//
+//                ParseUser.logOut();
+//
+//                Log.i(TAG, "Now the user should be null: " + ParseUser.getCurrentUser());
+//
+//                Intent i = new Intent(this, LoginActivity.class);
+//                startActivity(i);
+//
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
     // Returns the File for a photo stored on disk given the fileName
 //    public File getPhotoFileUri(String fileName) {
 //        // Get safe storage directory for photos

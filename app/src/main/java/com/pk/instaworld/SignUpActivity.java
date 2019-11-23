@@ -68,12 +68,13 @@ public class SignUpActivity extends AppCompatActivity {
                         user.setEmail(email);
                         user.signUpInBackground(new SignUpCallback() {
                             public void done(ParseException e) {
-                                if (e != null) {
+                                if (e == null) {
                                     Log.i(TAG, "Signing up Success!");
                                     Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
                                     startActivity(i);
                                     // Hooray! Let them use the app now.
                                 } else {
+                                    Log.e(TAG, "Signing up Failed" + e);
                                     // Sign up didn't succeed. Look at the ParseException
                                     // to figure out what went wrong
                                 }
