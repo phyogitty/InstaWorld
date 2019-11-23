@@ -21,7 +21,7 @@ The following **optional** features are implemented:
 - [ ] User Profiles
       - [ ] Allow the logged in user to add a profile photo
       - [x] Display the profile photo with each post
-- [] Tapping on a post's username or profile photo goes to that user's profile page and shows a grid view of the user's posts
+- [ ] Tapping on a post's username or profile photo goes to that user's profile page and shows a grid view of the user's posts
 - [ ] User can comment on a post and see all comments for each post in the post details screen.
 - [ ] User can like a post and see number of likes for each post in the post details screen.
 - [ ] Run your app on your phone and use a custom camera view
